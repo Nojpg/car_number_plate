@@ -1,4 +1,4 @@
-# A project of russian license plate detection with python, opencv and Adaboost algorithm
+# A project of russian license plate detection with java, opencv and Adaboost algorithm
 This project is an implementation of licence plate detection with opencv and Adaboost
 
 
