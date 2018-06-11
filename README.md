@@ -8,4 +8,4 @@ This project is an implementation of licence plate detection with opencv and Ada
     mvn test
     cd target 
     java -Djava.library.path=lib/ -jar car-number-1.0-SNAPSHOT.jar
-    
+for test in the test class 2 vars have to be changes with path(path, cascadePath)

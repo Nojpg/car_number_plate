@@ -15,11 +15,11 @@ import java.io.InputStream;
 
 class Detector {
     private CascadeClassifier classifier;
-
+    private String cascadePath;
+    private String newImagePath;
 
     private void load() {
-//        String cascadePath = "src/main/resources/haarcascade_russian_plate_number.xml";
-        classifier = new CascadeClassifier(/*cascadePath*/getClass().getResource("./haarcascade_russian_plate_number.xml").getFile());
+        classifier = new CascadeClassifier(cascadePath);
     }
 
     static Mat openImage(String fileName) throws Exception {
@@ -42,9 +42,7 @@ class Detector {
                     new Scalar(0, 255, 0)
             );
         }
-        ;
-//        String newImage = "/home/sovereign/IdeaProjects/carnumber/src/main/resources/test.jpg";
-        Imgcodecs.imwrite(getClass().getResource("result.jpg").getFile(), image);
+        Imgcodecs.imwrite(/*getClass().getResource("result.jpg").getFile()*/newImagePath, image);
         swingDraw(image);
     }
 
@@ -57,7 +55,9 @@ class Detector {
         title.setFrameLabelVisible(frame, new JLabel(imageIcon));
     }
 
-    void run(String path) throws Exception {
+    void run(String path, String cascadePath, String imagePath) throws Exception {
+        this.cascadePath = cascadePath;
+        this.newImagePath = imagePath;
         load();
         Mat image;
 //         = openImage(path)
