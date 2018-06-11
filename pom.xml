@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+
+
+    <groupId>pirate</groupId>
+    <artifactId>car-number</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <properties>
+        <opencv.version>3.4.1</opencv.version>
+        <opencv.vm>-Djava.library.path=${project.build.directory}/lib</opencv.vm>
+    </properties>
+<dependencies>
+    <dependency>
+        <groupId>pirate.nojpg</groupId>
+        <artifactId>opencv</artifactId>
+        <version>${opencv.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>pirate.nojpg</groupId>
+        <artifactId>opencv-native</artifactId>
+        <version>${opencv.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>4.12</version>
+        <scope>test</scope>
+    </dependency>
+</dependencies>
+<build>
+<sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
+<testSourceDirectory>${project.basedir}/src/test/java</testSourceDirectory>
+<plugins>
+
+    <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+            <argLine>${opencv.vm}</argLine>
+        </configuration>
+    </plugin>
+    <plugin>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+            <archive>
+                <manifest>
+                    <addClasspath>true</addClasspath>
+                    <classpathPrefix>lib/</classpathPrefix>
+                    <classpathPrefix>classes/lib/</classpathPrefix>
+                    <mainClass>pirate.nojpg.App</mainClass>
+                </manifest>
+            </archive>
+        </configuration>
+    </plugin>
+    <plugin>
+        <groupId>com.googlecode.mavennatives</groupId>
+        <artifactId>maven-nativedependencies-plugin</artifactId>
+        <executions>
+            <execution>
+                <id>unpacknatives</id>
+                <phase>generate-resources</phase>
+                <goals>
+                    <goal>copy</goal>
+                </goals>
+            </execution>
+        </executions>
+    </plugin>
+    <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+            <execution>
+                <id>unpack</id>
+                <phase>prepare-package</phase>
+                <goals>
+                    <goal>unpack</goal>
+                </goals>
+                <configuration>
+                    <artifactItems>
+                        <artifactItem>
+                            <groupId>pirate.nojpg</groupId>
+                            <artifactId>opencv-native</artifactId>
+                            <version>${opencv.version}</version>
+                            <includes>**\/*.so</includes>
+                            <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                        </artifactItem>
+                    </artifactItems>
+                </configuration>
+            </execution>
+        </executions>
+    </plugin>
+</plugins>
+</build>
+</project>
